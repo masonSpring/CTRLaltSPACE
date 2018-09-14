@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>00 - CTRLaltSPACE</title>
+    <link href="https://fonts.googleapis.com/css?family=Monoton|Playfair+Display" rel="stylesheet">
+    <style>
+
+        body{
+            background-color:black;
+            color:white;
+        }
+        p{
+            font-family: 'Roboto Mono', monospace;
+        }
+        h1{
+            font-family: 'Playfair Display', serif;
+            font-weight: 500;
+
+        }
+
+    </style>
+
+    <script>
+
+
+        window.onload = function(){
+
+
+
+
+
+
+
+
+    var eventList = ["none", "none"]
+    var event;
+        var i = 0;
+        var player = {"posX" : 1, "posY" : 4}
+
+var c = 0
+
+    function game(x){
+
+        if(x > eventList.length - 1){ return }
+        c++
+        console.log(c)
+            //reset board
+            var board = [["-","-","-"], ["-","-","-"], ["-","-","-"], ["-","-","-"], ["-","-","-"]]
+
+            //move and draw player
+
+            board[player.posY][player.posX] = "∩"
+            document.getElementById("game1").innerHTML = board[0].join('  ');
+            document.getElementById("game2").innerHTML = board[1].join('  ');
+            document.getElementById("game3").innerHTML = board[2].join('  ');
+            document.getElementById("game4").innerHTML = board[3].join('  ');
+            document.getElementById("game5").innerHTML = board[4].join('  ');
+        player.posY = player.posY - 1
+        setTimeout(function(){
+            x++;game(x) }, 1000);
+
+        //
+
+
+
+
+        }
+
+            document.getElementById("runButton").addEventListener("click", function(){
+               game(0)
+            });
+
+    }
+
+
+
+    </script>
+
+    </head>
+    <body>
+        <p id="game1" style="color:lime;font-size:48px">-  -  -</p>
+        <p id="game2" style="color:lime;font-size:48px">-  -  -</p>
+        <p id="game3" style="color:lime;font-size:48px">-  -  -</p>
+        <p id="game4" style="color:lime;font-size:48px">-  -  -</p>
+        <p id="game5" style="color:lime;font-size:48px">-  -  -</p>
+        <button type="button" id="runButton">Run</button><br><br><br><br>
+        <!-- game goes here -->
+
+        <!-- info -->
+        <img src="Assets/Logo.png">
+        <p>CTRLaltSPACE was made by the following people:</p>
+
+        <li style="list-style-type: none">Mason Spring: Programming</li>
+        <li style="list-style-type: none">Matthew Schnebelen: </li>
+        <li style="list-style-type: none">Nathaniel Woody:</li>
+        <li style="list-style-type: none">Justin Bautista: </li>
+
+
+
+
+    </body>
+</html>
