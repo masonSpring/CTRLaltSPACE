@@ -36,9 +36,41 @@
     var eventList = ["none", "none"]
     var event;
         var i = 0;
-        var player = {"posX" : 1, "posY" : 4}
+        var player = {"posX" : 1, "posY" : 3}
 
 var c = 0
+
+function none(){
+    return
+}
+            function moveUp(){
+                console.log("test")
+                if(player.posY > 0){
+                    player.posY = player.posY - 1
+                }
+            }
+
+            function moveDown(){
+                if(player.posY < 4){
+                    player.posY = player.posY + 1
+                }
+            }
+
+
+            function moveLeft(){
+                if(player.posX > 0){
+                    player.posX = player.posX - 1
+                }
+            }
+
+
+            function moveRight(){
+                if(player.posY < 2){
+                    player.posY = player.posY + 1
+                }
+            }
+
+
 
     function game(x){
 
@@ -47,16 +79,41 @@ var c = 0
         console.log(c)
             //reset board
             var board = [["-","-","-"], ["-","-","-"], ["-","-","-"], ["-","-","-"], ["-","-","-"]]
-
+            event = eventList[x]
             //move and draw player
+        var ifst = document.getElementById("ddIf");
+        var ifDROP = ifst.options[ifst.selectedIndex].value;
+        console.log(ifDROP)
+        if(ifDROP == event){
+
+
+        var thst = document.getElementById("ddTh");
+        var thenDROP = thst.options[thst.selectedIndex].value;
+            //window[thenDROP]()
+            console.log(thenDROP)
+            switch(thenDROP) {
+                case "moveUp" : moveUp(); break;
+                case "moveDown" : moveDown(); break;
+                case "moveLeft" : moveLeft(); break;
+                case "moveRight" : moveRight(); break;
+            }
+
+
+        }
 
             board[player.posY][player.posX] = "∩"
+
+
+        //window[event]();
+
+
+
             document.getElementById("game1").innerHTML = board[0].join('  ');
             document.getElementById("game2").innerHTML = board[1].join('  ');
             document.getElementById("game3").innerHTML = board[2].join('  ');
             document.getElementById("game4").innerHTML = board[3].join('  ');
             document.getElementById("game5").innerHTML = board[4].join('  ');
-        player.posY = player.posY - 1
+
         setTimeout(function(){
             x++;game(x) }, 1000);
 
@@ -68,7 +125,16 @@ var c = 0
         }
 
             document.getElementById("runButton").addEventListener("click", function(){
-               game(0)
+                player.posY = 3
+                player.posX = 1
+                var board = [["-","-","-"], ["-","-","-"], ["-","-","-"], ["-","∩","-"], ["-","-","-"]]
+                document.getElementById("game1").innerHTML = board[0].join('  ');
+                document.getElementById("game2").innerHTML = board[1].join('  ');
+                document.getElementById("game3").innerHTML = board[2].join('  ');
+                document.getElementById("game4").innerHTML = board[3].join('  ');
+                document.getElementById("game5").innerHTML = board[4].join('  ');
+                setTimeout(function(){
+                    game(0) }, 300);
             });
 
     }
@@ -82,13 +148,25 @@ var c = 0
         <p id="game1" style="color:lime;font-size:48px">-  -  -</p>
         <p id="game2" style="color:lime;font-size:48px">-  -  -</p>
         <p id="game3" style="color:lime;font-size:48px">-  -  -</p>
-        <p id="game4" style="color:lime;font-size:48px">-  -  -</p>
+        <p id="game4" style="color:lime;font-size:48px">-  ∩  -</p>
         <p id="game5" style="color:lime;font-size:48px">-  -  -</p>
         <button type="button" id="runButton">Run</button><br><br><br><br>
+        <p>If</p>
+        <select id="ddIf">
+            <option value="none">none</option>
+        </select>
+        <p>Then</p>
+        <select id="ddTh">
+            <option value="moveUp">moveUp()</option>
+            <option value="moveDown">moveDown()</option>
+            <option value="moveLeft">moveLeft()</option>
+            <option value="moveRight">moveRight  ()</option>
+
+        </select>
         <!-- game goes here -->
 
         <!-- info -->
-        <img src="Assets/Logo.png">
+        <br><img src="Assets/Logo.png">
         <p>CTRLaltSPACE was made by the following people:</p>
 
         <li style="list-style-type: none">Mason Spring: Programming</li>
