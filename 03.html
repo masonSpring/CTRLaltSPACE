@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>03 - CTRLaltSPACE</title>
+    <link href="https://fonts.googleapis.com/css?family=Monoton|Playfair+Display" rel="stylesheet">
+    <style>
+
+        body{
+            background-color:black;
+            color:white;
+        }
+        p{
+            font-family: 'Roboto Mono', monospace;
+        }
+        h1{
+            font-family: 'Playfair Display', serif;
+            font-weight: 500;
+
+        }
+
+    </style>
+
+    <script>
+
+
+        window.onload = function(){
+            let canvas = document.getElementById("gameCanvas");
+            let ctx = canvas.getContext("2d");
+            ctx.canvas.width = "150"
+            ctx.canvas.height = "250"
+
+
+
+            document.getElementById("nextButton").disabled = true;
+
+
+            
+
+
+    var eventList = ["start","hline","vline","hline","vline","none"]
+    var attackArea = [[3,0,0,0],[0,4,3,1],[0,0,1,5],[0,2,3,1],[0,0,1,5],[3,0,0,0],[3,0,0,0]]
+
+    var event;
+        var i = 0;
+        var player = {"posX" : 1, "posY" : 5}
+
+var c = 0
+
+
+
+
+function GetPixel(x, y)
+{
+    var p = ctx.getImageData(x, y, 1, 1).data; 
+    var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);  
+    return hex;
+}
+
+function rgbToHex(r, g, b) {
+    if (r > 255 || g > 255 || b > 255)
+        throw "Invalid color component";
+    return ((r << 16) | (g << 8) | b).toString(16);
+}
+
+
+
+function drawPre(turn){
+    clearBoard
+    ctx.fillStyle="#8D0000"
+    if(attackArea[turn][0] == 3){
+        return
+    }
+    ctx.fillRect(attackArea[turn][0]*50,attackArea[turn][1]*50,attackArea[turn][2]*50,attackArea[turn][3]*50)
+
+}
+
+function drawPlayer(){
+    ctx.fillStyle="#ffffff"
+    ctx.fillRect((player.posX*50),(player.posY*50),50,50)
+}
+
+function drawAttack(turn){
+    clearBoard
+    ctx.fillStyle="#FF0000"
+    console.log("drawPRE"+attackArea[turn][0])
+    if(attackArea[turn][0] == 3){
+        return
+    }
+    ctx.fillRect(attackArea[turn][0]*50,attackArea[turn][1]*50,attackArea[turn][2]*50,attackArea[turn][3]*50)
+    if(GetPixel(player.posX*50+10,player.posY*50+10) != "#ffffff"){
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        return "end"
+    }
+    else{
+        return "continue"
+    }
+
+}
+function clearBoard(){
+    ctx.fillStyle="#000000"
+    ctx.fillRect(0,0,canvas.width,canvas.height)
+}
+
+
+function none(){
+    return
+}
+
+
+            function moveUp(){
+                console.log("test")
+                if(player.posY > 0){
+                    player.posY = player.posY - 1
+                }
+            }
+
+            function moveDown(){
+                if(player.posY < 4){
+                    player.posY = player.posY + 1
+                }
+            }
+
+
+            function moveLeft(){
+                if(player.posX > 0){
+                    player.posX = player.posX - 1
+                }
+            }
+
+
+            function moveRight(){
+                if(player.posX < 2){
+                    player.posX = player.posX + 1
+                }
+            }
+
+
+
+    function game(x){
+
+        if(x > eventList.length - 1){
+            
+            document.getElementById("runButton").disabled = false;
+            document.getElementById("nextButton").disabled = false;
+            document.getElementById("ddIf").disabled = false;
+            document.getElementById("ddTh").disabled = false;
+            document.getElementById("ddEl").disabled = false;
+            ctx.fillStyle="#7FFF00"
+            ctx.fillRect(0,0,canvas.width,canvas.height)            
+            return
+             }
+        c++
+        console.log(c)
+            //reset board
+            event = eventList[x]
+        clearBoard();
+        drawPre(x+1);
+            //move and draw player
+        var ifst = document.getElementById("ddIf");
+        var ifDROP = ifst.options[ifst.selectedIndex].value;
+        console.log(ifDROP)
+        if(ifDROP == event){
+
+
+        var thst = document.getElementById("ddTh");
+        var thenDROP = thst.options[thst.selectedIndex].value;
+            //window[thenDROP]()
+            console.log(thenDROP)
+            switch(thenDROP) {
+                case "moveUp" : moveUp(); break;
+                case "moveDown" : moveDown(); break;
+                case "moveLeft" : moveLeft(); break;
+                case "moveRight" : moveRight(); break;
+            }
+
+
+        }
+        else{
+            var thst = document.getElementById("ddEl");
+        var thenDROP = thst.options[thst.selectedIndex].value;
+            //window[thenDROP]()
+            console.log(thenDROP)
+            switch(thenDROP) {
+                case "moveUp" : moveUp(); break;
+                case "moveDown" : moveDown(); break;
+                case "moveLeft" : moveLeft(); break;
+                case "moveRight" : moveRight(); break;
+            }
+        }
+        drawPlayer();
+        
+        var e = drawAttack(x);
+        if(e == "end"){
+            document.getElementById("nextButton").disabled = true;
+            document.getElementById("runButton").disabled = false;
+            document.getElementById("ddIf").disabled = false;
+            document.getElementById("ddTh").disabled = false;
+            document.getElementById("ddEl").disabled = false;
+            return
+        }
+
+
+
+        //window[event]();
+
+
+
+
+
+        setTimeout(function(){
+            clearBoard();
+            x++;game(x) }, 750);
+
+        //
+
+
+
+
+        }
+
+            document.getElementById("runButton").addEventListener("click", function(){
+                player.posY = 3
+                player.posX = 1
+                
+                document.getElementById("runButton").disabled = true;
+
+                document.getElementById("ddIf").disabled = true;
+                document.getElementById("ddTh").disabled = true;
+                document.getElementById("ddEl").disabled = true;
+                setTimeout(function(){
+                    game(0) }, 300);
+            });
+
+    }
+
+
+
+    </script>
+
+    </head>
+    <body>
+        <canvas id="gameCanvas" style="border-color:white;border-style:solid"></canvas>
+        <br><br>
+        <button type="button" id="runButton">Run</button>
+        <a href="04.html" target="_parent"><button type="button" id="nextButton">Next</button></a><br><br><br><br>
+        <p>If</p>
+        <select id="ddIf">
+            <option value="none">none()</option>
+            <option value="hline">horizontalLine()</option>
+            <option value="vline">verticalLine()</option>
+            <option value="dot">dot()</option>
+        </select>
+        <p>Then</p>
+        <select id="ddTh">
+            <option value="moveUp">moveUp()</option>
+            <option value="moveDown">moveDown()</option>
+            <option value="moveLeft">moveLeft()</option>
+            <option value="moveRight">moveRight()</option> 
+        </select>
+        <p>Else</p>
+        <select id="ddEl">
+                <option value="moveUp">moveUp()</option>
+                <option value="moveDown">moveDown()</option>
+                <option value="moveLeft">moveLeft()</option>
+                <option value="moveRight">moveRight()</option> 
+            </select>
+        <!-- game goes here -->
+
+        <!-- info -->
+        <br><img src="Assets/Logo.png">
+        <p>CTRLaltSPACE was made by the following people:</p>
+
+        <li style="list-style-type: none">Mason Spring: Programming</li>
+        <li style="list-style-type: none">Matthew Schnebelen: Graphic Design</li>
+        <li style="list-style-type: none">Nathaniel Woody: Video Editing</li>
+        <li style="list-style-type: none">Justin Bautista: Level Design</li>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+
+
+
+    </body>
+</html>
