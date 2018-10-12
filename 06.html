@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>05 - CTRLaltSPACE</title>
+    <title>06 - CTRLaltSPACE</title>
     <link href="https://fonts.googleapis.com/css?family=Monoton|Playfair+Display" rel="stylesheet">
     <style>
 
@@ -12,11 +12,7 @@
         p{
             font-family: 'Roboto Mono', monospace;
         }
-        h1{
-            font-family: 'Playfair Display', serif;
-            font-weight: 500;
 
-        }
 
     </style>
 
@@ -37,8 +33,8 @@
             
 
 
-    var eventList = ["start","vline","dot","vline","dot","none"]
-    var attackArea = [[3,0,0,0],[1,0,2,5],[0,2,1,1],[1,0,2,5],[0,1,1,1],[3,0,0,0],[3,0,0,0]]
+    var eventList = ["start","none"]
+    var attackArea = [[3,0,0,0],[3,0,0,0],[3,0,0,0]]
 
     var event;
         var i = 0;
@@ -251,6 +247,7 @@ function none(){
 
     </head>
     <body>
+        <h1>Congrats, you completed all 5 levels! Level 6 is a blank level. Feel free to edit the code and make your own challenges!</h1><br><br>
         <canvas id="gameCanvas" style="border-color:white;border-style:solid"></canvas>
         <br><br>
         <button type="button" id="runButton">Run</button>
